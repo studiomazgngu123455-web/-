@@ -1352,6 +1352,167 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
         }
+        
+        /* ===== أنماط إدارة الأسعار ===== */
+        .pricing-management {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .pricing-currency-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .pricing-currency-tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .pricing-currency-tab:hover {
+            color: white;
+        }
+        
+        .pricing-currency-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .pricing-items-container {
+            margin-bottom: 20px;
+        }
+        
+        .pricing-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .pricing-item input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: white;
+        }
+        
+        .remove-pricing-btn {
+            background: rgba(231,76,60,0.2);
+            color: #ff6b6b;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .add-pricing-btn {
+            background: rgba(46,204,113,0.2);
+            color: #2ecc71;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        /* ===== أنماط نموذج طلب الشحن ===== */
+        .order-form-modal .content-container {
+            max-width: 500px;
+        }
+        
+        .order-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .order-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .order-form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .order-form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.1);
+        }
+        
+        .order-submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+        
+        .order-submit-btn:hover {
+            background: linear-gradient(135deg, #128C7E, #25D366);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+        
+        .order-summary {
+            background: rgba(76, 201, 240, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(76, 201, 240, 0.2);
+        }
+        
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .order-summary-label {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .order-summary-value {
+            font-weight: 600;
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -1772,10 +1933,20 @@
                         </div>
                         
                         <div id="pricing-tab" class="admin-tab">
-                            <h3 style="color: var(--accent); margin-bottom: 20px;"><i class="fas fa-tags"></i> إدارة الأسعار</h3>
-                            <div id="pricing-content">
-                                <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
-                                    <p>اختر تطبيقاً من لوحة إدارة التطبيقات لإدارة أسعاره</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                                <h3 style="color: var(--accent);"><i class="fas fa-tags"></i> إدارة الأسعار</h3>
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="admin-small-btn" onclick="loadPricingManagement(null)" style="background: rgba(231,76,60,0.2); color: #ff6b6b;">
+                                        <i class="fas fa-times"></i> إلغاء التحديد
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div id="pricing-management-container">
+                                <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; text-align: center;">
+                                    <i class="fas fa-tags" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px; display: block;"></i>
+                                    <h4 style="margin-bottom: 10px;">اختر تطبيقاً لإدارة أسعاره</h4>
+                                    <p>انقر على زر "إدارة الأسعار" بجانب أي تطبيق في تبويب "إدارة التطبيقات"</p>
                                 </div>
                             </div>
                         </div>
@@ -1854,6 +2025,67 @@
         </div>
     </div>
     
+    <!-- مودال إدارة الأسعار -->
+    <div class="content-modal" id="pricing-management-modal">
+        <div class="content-container" style="max-width: 800px;">
+            <button class="close-content" onclick="closeModal('pricing-management-modal')">&times;</button>
+            <div class="content-header">
+                <h2 id="pricing-app-title"><i class="fas fa-tags"></i> إدارة أسعار التطبيق</h2>
+            </div>
+            <div class="content-body">
+                <input type="hidden" id="pricing-app-id">
+                
+                <div class="pricing-management">
+                    <div class="pricing-currency-tabs">
+                        <button class="pricing-currency-tab active" data-currency="usd">
+                            <i class="fas fa-dollar-sign"></i> دولار (USD)
+                        </button>
+                        <button class="pricing-currency-tab" data-currency="sar">
+                            <i class="fas fa-riyal-sign"></i> ريال سعودي (SAR)
+                        </button>
+                        <button class="pricing-currency-tab" data-currency="egp">
+                            <i class="fas fa-pound-sign"></i> جنيه مصري (EGP)
+                        </button>
+                    </div>
+                    
+                    <div id="usd-pricing-management" class="pricing-items-container">
+                        <h4 style="margin-bottom: 15px; color: var(--accent);">باقات الدولار</h4>
+                        <div id="usd-pricing-items">
+                            <!-- باقات الدولار تظهر هنا -->
+                        </div>
+                        <button type="button" class="add-pricing-btn" onclick="addPricingItem('usd')">
+                            <i class="fas fa-plus"></i> إضافة باقة جديدة
+                        </button>
+                    </div>
+                    
+                    <div id="sar-pricing-management" class="pricing-items-container" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: var(--accent);">باقات الريال السعودي</h4>
+                        <div id="sar-pricing-items">
+                            <!-- باقات الريال السعودي تظهر هنا -->
+                        </div>
+                        <button type="button" class="add-pricing-btn" onclick="addPricingItem('sar')">
+                            <i class="fas fa-plus"></i> إضافة باقة جديدة
+                        </button>
+                    </div>
+                    
+                    <div id="egp-pricing-management" class="pricing-items-container" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: var(--accent);">باقات الجنيه المصري</h4>
+                        <div id="egp-pricing-items">
+                            <!-- باقات الجنيه المصري تظهر هنا -->
+                        </div>
+                        <button type="button" class="add-pricing-btn" onclick="addPricingItem('egp')">
+                            <i class="fas fa-plus"></i> إضافة باقة جديدة
+                        </button>
+                    </div>
+                    
+                    <button type="button" class="admin-action-btn" onclick="savePricing()" style="width: 100%; margin-top: 20px;">
+                        <i class="fas fa-save"></i> حفظ جميع الأسعار
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- مودال تفاصيل التطبيق (الأصلي) -->
     <div class="app-details-modal" id="app-details-modal">
         <div class="app-details-container">
@@ -1911,6 +2143,61 @@
                     <i class="fab fa-whatsapp"></i>
                     اطلب عبر واتساب
                 </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- مودال طلب الشحن -->
+    <div class="content-modal order-form-modal" id="order-form-modal">
+        <div class="content-container">
+            <button class="close-content" onclick="closeModal('order-form-modal')">&times;</button>
+            
+            <div class="content-header">
+                <h2><i class="fas fa-shopping-cart"></i> طلب شحن جديد</h2>
+                <p>أكمل بيانات طلبك لتوصيل الشحن إلى حسابك</p>
+            </div>
+            
+            <div class="content-body">
+                <div class="order-summary">
+                    <div class="order-summary-item">
+                        <span class="order-summary-label">التطبيق:</span>
+                        <span class="order-summary-value" id="order-app-name">-</span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span class="order-summary-label">الباقة:</span>
+                        <span class="order-summary-value" id="order-package">-</span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span class="order-summary-label">السعر:</span>
+                        <span class="order-summary-value" id="order-price">-</span>
+                    </div>
+                </div>
+                
+                <form id="orderForm">
+                    <input type="hidden" id="order-app-id">
+                    <input type="hidden" id="order-package-coins">
+                    <input type="hidden" id="order-package-price">
+                    <input type="hidden" id="order-currency">
+                    
+                    <div class="order-form-group">
+                        <label for="account-id"><i class="fas fa-user"></i> ID الحساب</label>
+                        <input type="text" id="account-id" class="order-form-control" placeholder="أدخل ID حسابك في التطبيق" required>
+                    </div>
+                    
+                    <div class="order-form-group">
+                        <label for="phone-number"><i class="fas fa-phone"></i> رقم الهاتف</label>
+                        <input type="tel" id="phone-number" class="order-form-control" placeholder="أدخل رقم هاتفك للتواصل" required>
+                    </div>
+                    
+                    <div class="order-form-group">
+                        <label for="notes"><i class="fas fa-sticky-note"></i> ملاحظات إضافية (اختياري)</label>
+                        <textarea id="notes" class="order-form-control" rows="3" placeholder="أضف أي ملاحظات أو تعليمات خاصة"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="order-submit-btn">
+                        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -2180,96 +2467,14 @@
                         { coins: '500,000 عملة', price: '7,500', currency: 'EGP' }
                     ]
                 }
-            },
-            'tiktok': {
-                id: 'tiktok',
-                name: 'TikTok Live',
-                icon: 'https://play-lh.googleusercontent.com/waX_CXnriskbccUeOevisOQwwR-tlPRPX0hiFZ4X-w2nHDTb_I2yeBliFX5VAqfetw=w480-h960-rw',
-                category: 'بث مباشر',
-                description: 'خدمة البث المباشر ضمن تطبيق TikTok. اشحن عملات TikTok ودعم المبدعين المفضلين لديك.',
-                status: 'active',
-                pricing: {
-                    usd: [
-                        { coins: '100 عملة', price: '1', currency: 'USD' },
-                        { coins: '500 عملة', price: '5', currency: 'USD' },
-                        { coins: '1,000 عملة', price: '10', currency: 'USD' },
-                        { coins: '5,000 عملة', price: '50', currency: 'USD' }
-                    ],
-                    sar: [
-                        { coins: '100 عملة', price: '3.75', currency: 'SAR' },
-                        { coins: '500 عملة', price: '18.75', currency: 'SAR' },
-                        { coins: '1,000 عملة', price: '37.5', currency: 'SAR' },
-                        { coins: '5,000 عملة', price: '187.5', currency: 'SAR' }
-                    ],
-                    egp: [
-                        { coins: '100 عملة', price: '50', currency: 'EGP' },
-                        { coins: '500 عملة', price: '250', currency: 'EGP' },
-                        { coins: '1,000 عملة', price: '500', currency: 'EGP' },
-                        { coins: '5,000 عملة', price: '2,500', currency: 'EGP' }
-                    ]
-                }
-            },
-            'bigo-live': {
-                id: 'bigo-live',
-                name: 'Bigo Live',
-                icon: 'https://play-lh.googleusercontent.com/U3wX7I2oiGS5sW25B5B5iduCWPZCZF7E9GCXJ_PDfCAMd0ZRkpxPoMIbV8GjhUQPGw=s96-rw',
-                category: 'بث مباشر',
-                description: 'تطبيق البث المباشر الشهير عالمياً. اشحن ألماس Bigo وارتقِ بمستوى بثك المباشر.',
-                status: 'active',
-                pricing: {
-                    usd: [
-                        { coins: '100 ألماس', price: '1', currency: 'USD' },
-                        { coins: '500 ألماس', price: '5', currency: 'USD' },
-                        { coins: '1,000 ألماس', price: '10', currency: 'USD' },
-                        { coins: '5,000 ألماس', price: '50', currency: 'USD' }
-                    ],
-                    sar: [
-                        { coins: '100 ألماس', price: '3.75', currency: 'SAR' },
-                        { coins: '500 ألماس', price: '18.75', currency: 'SAR' },
-                        { coins: '1,000 ألماس', price: '37.5', currency: 'SAR' },
-                        { coins: '5,000 ألماس', price: '187.5', currency: 'SAR' }
-                    ],
-                    egp: [
-                        { coins: '100 ألماس', price: '50', currency: 'EGP' },
-                        { coins: '500 ألماس', price: '250', currency: 'EGP' },
-                        { coins: '1,000 ألماس', price: '500', currency: 'EGP' },
-                        { coins: '5,000 ألماس', price: '2,500', currency: 'EGP' }
-                    ]
-                }
-            },
-            'haya-chat': {
-                id: 'haya-chat',
-                name: 'Haya Chat',
-                icon: 'https://play-lh.googleusercontent.com/5BM5HXOgR0p2pPvrP81MAW-1gOyR-RV1WM2h1R2RtsS9FBhFOrrGI3YaGaTdjDNQ_OA=w480-h960-rw',
-                category: 'دردشة',
-                description: 'تطبيق الدردشة والتعارف الاجتماعي. اشحن رصيدك وتواصل مع أشخاص جدد.',
-                status: 'active',
-                pricing: {
-                    usd: [
-                        { coins: 'رصيد أساسي', price: '3', currency: 'USD' },
-                        { coins: 'رصيد متميز', price: '10', currency: 'USD' },
-                        { coins: 'رصيد VIP', price: '25', currency: 'USD' },
-                        { coins: 'رصيد ملكي', price: '50', currency: 'USD' }
-                    ],
-                    sar: [
-                        { coins: 'رصيد أساسي', price: '11.25', currency: 'SAR' },
-                        { coins: 'رصيد متميز', price: '37.5', currency: 'SAR' },
-                        { coins: 'رصيد VIP', price: '93.75', currency: 'SAR' },
-                        { coins: 'رصيد ملكي', price: '187.5', currency: 'SAR' }
-                    ],
-                    egp: [
-                        { coins: 'رصيد أساسي', price: '150', currency: 'EGP' },
-                        { coins: 'رصيد متميز', price: '500', currency: 'EGP' },
-                        { coins: 'رصيد VIP', price: '1,250', currency: 'EGP' },
-                        { coins: 'رصيد ملكي', price: '2,500', currency: 'EGP' }
-                    ]
-                }
             }
         };
         
         // المتغيرات العامة
         let appsData = {};
         let adminCredentials = {};
+        let currentSelectedAppForPricing = null;
+        let currentOrderDetails = {};
         
         // ===== التهيئة =====
         document.addEventListener('DOMContentLoaded', function() {
@@ -2459,9 +2664,23 @@
                 saveApp();
             });
             
+            // نموذج طلب الشحن
+            document.getElementById('orderForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitOrder();
+            });
+            
             // إغلاق الإشعار
             document.getElementById('close-notification').addEventListener('click', function() {
                 document.getElementById('notification').classList.remove('show');
+            });
+            
+            // أحداث تبويبات الأسعار في لوحة التحكم
+            document.querySelectorAll('.pricing-currency-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const currency = this.dataset.currency;
+                    switchPricingCurrencyTab(currency);
+                });
             });
         }
         
@@ -2505,6 +2724,9 @@
                             <button class="admin-small-btn" onclick="editApp('${app.id}')">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <button class="admin-small-btn" onclick="managePricing('${app.id}')">
+                                <i class="fas fa-tags"></i>
+                            </button>
                             <button class="admin-small-btn" onclick="deleteApp('${app.id}')" style="background: rgba(231,76,60,0.2); color: #ff6b6b;">
                                 <i class="fas fa-trash"></i>
                             </button>
@@ -2538,6 +2760,209 @@
             
             // إظهار التبويب المحدد
             document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // إذا كان تبويب الأسعار، تحميل التطبيق المحدد
+            if (tabName === 'pricing') {
+                loadPricingManagement(currentSelectedAppForPricing);
+            }
+        }
+        
+        function loadPricingManagement(appId) {
+            const container = document.getElementById('pricing-management-container');
+            
+            if (!appId) {
+                currentSelectedAppForPricing = null;
+                container.innerHTML = `
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; text-align: center;">
+                        <i class="fas fa-tags" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px; display: block;"></i>
+                        <h4 style="margin-bottom: 10px;">اختر تطبيقاً لإدارة أسعاره</h4>
+                        <p>انقر على زر "إدارة الأسعار" بجانب أي تطبيق في تبويب "إدارة التطبيقات"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const app = appsData[appId];
+            if (!app) return;
+            
+            currentSelectedAppForPricing = appId;
+            
+            container.innerHTML = `
+                <div class="pricing-management">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <div style="width: 40px; height: 40px; border-radius: 10px; overflow: hidden;">
+                            <img src="${app.icon}" alt="${app.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div>
+                            <h4 style="margin: 0;">${app.name}</h4>
+                            <span style="background: rgba(76,201,240,0.2); color: var(--accent); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;">${app.category}</span>
+                        </div>
+                        <button class="admin-action-btn" onclick="openPricingModal('${appId}')" style="margin-right: auto;">
+                            <i class="fas fa-edit"></i> فتح محرر الأسعار المتقدم
+                        </button>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="margin-bottom: 10px; color: var(--accent);">ملخص الأسعار الحالية:</h5>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px;">
+                                <div style="font-size: 0.9rem; opacity: 0.8;">الدولار</div>
+                                <div style="font-weight: bold;">${app.pricing?.usd?.length || 0} باقة</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px;">
+                                <div style="font-size: 0.9rem; opacity: 0.8;">الريال السعودي</div>
+                                <div style="font-weight: bold;">${app.pricing?.sar?.length || 0} باقة</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px;">
+                                <div style="font-size: 0.9rem; opacity: 0.8;">الجنيه المصري</div>
+                                <div style="font-weight: bold;">${app.pricing?.egp?.length || 0} باقة</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="admin-action-btn" onclick="openPricingModal('${appId}')">
+                            <i class="fas fa-edit"></i> فتح محرر الأسعار المتقدم
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function managePricing(appId) {
+            currentSelectedAppForPricing = appId;
+            switchAdminTab('pricing');
+        }
+        
+        function openPricingModal(appId) {
+            const app = appsData[appId];
+            if (!app) return;
+            
+            document.getElementById('pricing-app-id').value = appId;
+            document.getElementById('pricing-app-title').innerHTML = `<i class="fas fa-tags"></i> إدارة أسعار ${app.name}`;
+            
+            // تحميل باقات الدولار
+            loadPricingItems('usd', app.pricing?.usd || []);
+            // تحميل باقات الريال السعودي
+            loadPricingItems('sar', app.pricing?.sar || []);
+            // تحميل باقات الجنيه المصري
+            loadPricingItems('egp', app.pricing?.egp || []);
+            
+            openModal('pricing-management-modal');
+        }
+        
+        function loadPricingItems(currency, items) {
+            const container = document.getElementById(`${currency}-pricing-items`);
+            container.innerHTML = '';
+            
+            if (items.length === 0) {
+                // إضافة باقة افتراضية إذا لم تكن هناك باقات
+                addPricingItem(currency, true);
+            } else {
+                items.forEach((item, index) => {
+                    addPricingItem(currency, false, item);
+                });
+            }
+        }
+        
+        function addPricingItem(currency, isDefault = false, itemData = null) {
+            const container = document.getElementById(`${currency}-pricing-items`);
+            const index = container.children.length;
+            
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'pricing-item';
+            
+            const coinsValue = isDefault ? '100,000 وحدة' : (itemData?.coins || '');
+            const priceValue = isDefault ? '1' : (itemData?.price || '');
+            
+            itemDiv.innerHTML = `
+                <input type="text" class="pricing-coins" placeholder="مثال: 100,000 وحدة" value="${coinsValue}" data-currency="${currency}">
+                <input type="text" class="pricing-price" placeholder="السعر" value="${priceValue}" data-currency="${currency}">
+                <button type="button" class="remove-pricing-btn" onclick="removePricingItem(this)">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            
+            container.appendChild(itemDiv);
+        }
+        
+        function removePricingItem(button) {
+            const itemDiv = button.closest('.pricing-item');
+            if (itemDiv) {
+                itemDiv.remove();
+            }
+        }
+        
+        function switchPricingCurrencyTab(currency) {
+            // إزالة النشاط من جميع الأزرار
+            document.querySelectorAll('.pricing-currency-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // إضافة النشاط للزر المحدد
+            document.querySelector(`.pricing-currency-tab[data-currency="${currency}"]`).classList.add('active');
+            
+            // إخفاء جميع الحاويات
+            document.querySelectorAll('.pricing-items-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // إظهار الحاوية المحددة
+            document.getElementById(`${currency}-pricing-management`).style.display = 'block';
+        }
+        
+        function savePricing() {
+            const appId = document.getElementById('pricing-app-id').value;
+            if (!appId || !appsData[appId]) return;
+            
+            const app = appsData[appId];
+            
+            // جمع باقات الدولار
+            const usdItems = [];
+            document.querySelectorAll('#usd-pricing-items .pricing-item').forEach(item => {
+                const coins = item.querySelector('.pricing-coins').value;
+                const price = item.querySelector('.pricing-price').value;
+                if (coins && price) {
+                    usdItems.push({ coins: coins, price: price, currency: 'USD' });
+                }
+            });
+            
+            // جمع باقات الريال السعودي
+            const sarItems = [];
+            document.querySelectorAll('#sar-pricing-items .pricing-item').forEach(item => {
+                const coins = item.querySelector('.pricing-coins').value;
+                const price = item.querySelector('.pricing-price').value;
+                if (coins && price) {
+                    sarItems.push({ coins: coins, price: price, currency: 'SAR' });
+                }
+            });
+            
+            // جمع باقات الجنيه المصري
+            const egpItems = [];
+            document.querySelectorAll('#egp-pricing-items .pricing-item').forEach(item => {
+                const coins = item.querySelector('.pricing-coins').value;
+                const price = item.querySelector('.pricing-price').value;
+                if (coins && price) {
+                    egpItems.push({ coins: coins, price: price, currency: 'EGP' });
+                }
+            });
+            
+            // تحديث بيانات الأسعار
+            app.pricing = {
+                usd: usdItems,
+                sar: sarItems,
+                egp: egpItems
+            };
+            
+            saveAppData();
+            closeModal('pricing-management-modal');
+            showNotification('تم حفظ الأسعار بنجاح!', 'success');
+            
+            // تحديث العرض في لوحة التحكم
+            loadPricingManagement(appId);
+            
+            // تحديث العرض في الموقع
+            generateSiteApps();
         }
         
         function showAddAppForm() {
@@ -2765,12 +3190,68 @@
                         </div>
                         <div class="currency-symbol">${item.currency}</div>
                     </div>
-                    <button class="order-btn" data-coins="${item.coins}" data-price="${item.price}" data-currency="${item.currency}">
+                    <button class="order-btn" onclick="openOrderForm('${item.coins}', '${item.price}', '${item.currency}')">
                         <i class="fab fa-whatsapp"></i> اطلب الآن
                     </button>
                 `;
                 grid.appendChild(priceCard);
             });
+        }
+        
+        function openOrderForm(coins, price, currency) {
+            const appName = document.getElementById('detail-app-name').textContent;
+            const appId = document.querySelector('.app-container[data-app]')?.getAttribute('data-app');
+            
+            // حفظ تفاصيل الطلب
+            currentOrderDetails = {
+                appId: appId,
+                appName: appName,
+                package: coins,
+                price: `${getCurrencySymbol(currency)}${price} ${currency}`,
+                rawPrice: price,
+                currency: currency
+            };
+            
+            // تحديث نموذج الطلب
+            document.getElementById('order-app-name').textContent = appName;
+            document.getElementById('order-package').textContent = coins;
+            document.getElementById('order-price').textContent = `${getCurrencySymbol(currency)}${price} ${currency}`;
+            
+            document.getElementById('order-app-id').value = appId;
+            document.getElementById('order-package-coins').value = coins;
+            document.getElementById('order-package-price').value = price;
+            document.getElementById('order-currency').value = currency;
+            
+            // إظهار نموذج الطلب
+            closeDetailsModal();
+            openModal('order-form-modal');
+        }
+        
+        function submitOrder() {
+            const accountId = document.getElementById('account-id').value;
+            const phoneNumber = document.getElementById('phone-number').value;
+            const notes = document.getElementById('notes').value;
+            
+            const { appName, package: packageName, price, rawPrice, currency } = currentOrderDetails;
+            
+            const message = `🎯 طلب شحن جديد من موقع وكالة الجارحي:\n\n`
+                + `📱 التطبيق: ${appName}\n`
+                + `📦 الباقة: ${packageName}\n`
+                + `💰 السعر: ${price}\n`
+                + `🔢 ID الحساب: ${accountId}\n`
+                + `📞 رقم الهاتف: ${phoneNumber}\n`
+                + `📝 الملاحظات: ${notes || 'لا يوجد'}\n\n`
+                + `🕒 الوقت: ${new Date().toLocaleString('ar-EG')}\n`
+                + `✅ يرجى تأكيد الطلب وبيانات الدفع`;
+            
+            const whatsappUrl = `https://wa.me/966532126333?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // إعادة تعيين النموذج
+            document.getElementById('orderForm').reset();
+            closeModal('order-form-modal');
+            
+            showNotification('تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.', 'success');
         }
         
         function getCurrencySymbol(currency) {
@@ -2804,34 +3285,6 @@
                 const currency = this.getAttribute('data-currency');
                 document.getElementById(`${currency}-pricing-content`).classList.add('active');
             });
-        });
-        
-        // ===== EVENT LISTENER معدل للأزرار =====
-        // هذا الحدث لا يؤثر على زر تسجيل الدخول لأنه الآن class مختلف
-        document.addEventListener('click', function(e) {
-            // فقط لأزرار الطلب التي تحمل class "order-btn"
-            if (e.target.classList.contains('order-btn') || e.target.closest('.order-btn')) {
-                e.preventDefault();
-                
-                const button = e.target.classList.contains('order-btn') ? e.target : e.target.closest('.order-btn');
-                const appName = document.getElementById('detail-app-name').textContent;
-                const coins = button.getAttribute('data-coins');
-                const price = button.getAttribute('data-price');
-                const currency = button.getAttribute('data-currency');
-                const currencySymbol = getCurrencySymbol(currency);
-                
-                const message = `🎯 طلب شحن جديد من موقع وكالة الجارحي:\n\n`
-                    + `📱 التطبيق: ${appName}\n`
-                    + `📦 الباقة: ${coins}\n`
-                    + `💰 السعر: ${currencySymbol}${price} ${currency}\n\n`
-                    + `🕒 الوقت: ${new Date().toLocaleString('ar-EG')}\n`
-                    + `🔢 الرجاء إرسال ID الحساب للتوصيل`;
-                
-                const whatsappUrl = `https://wa.me/966532126333?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
-                
-                closeDetailsModal();
-            }
         });
         
         // Smooth scrolling
